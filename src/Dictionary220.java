@@ -1,10 +1,8 @@
+
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Locale;
+import java.util.*;
 
 /********************************
  * File: Dictionary220
@@ -14,32 +12,37 @@ import java.util.Locale;
  ********************************/
 
 public class Dictionary220 {
-        Multimap<String, String> dictionary = ArrayListMultimap.create();
+    Multimap<String, String> multimap = ArrayListMultimap.create();
 
-    public Dictionary220(){
-        for(Word word : Word.values()){
-            for(int i=0;i<word.getDefinitions().length;i++){
-                dictionary.put(word.getWordName(),word.getDefinitions()[i]);
+
+    public Dictionary220() {
+        for (Entries entries : Entries.values()) {
+
+            for (int i = 0; i < entries.getDefinitions().length; i++) {
+
+                multimap.put(entries.getWordName().toLowerCase(), entries.getDefinitions()[i]);
+            }
+        }
+    }
+
+    public void displayDefinitions(String word) {
+
+
+        ArrayList<String> definitions = new ArrayList<>(multimap.get(word));// create an arrayList with a collection as the constructor
+        String displayWord = "";
+        for (Entries enumEntries : Entries.values()) {
+            if (enumEntries.getWordName().equalsIgnoreCase(word)) {
+                displayWord = enumEntries.getWordName();
             }
         }
 
+        for (int i = 0; i < definitions.size(); i++) {
 
-    }
-
-    public void displayDefinitions(String word){
-        ArrayList<String> definitions = new ArrayList<>(dictionary.get(word)); // create an arrayList with a collection as the constructor
-        if(definitions.size()==0){
-            System.out.println("<Not Found>");
-        }
-
-        for(int i =0;i<definitions.size();i++){
-            word = word.substring(0,1).toUpperCase() + word.substring(1);
-            System.out.println( word + ": " + definitions.get(i));
+            System.out.println(displayWord + ": " + definitions.get(i));
         }
 
 
     }
-
 
 
 }
